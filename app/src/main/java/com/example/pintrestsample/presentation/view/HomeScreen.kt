@@ -61,7 +61,10 @@ fun HomeScreen() {
             val photoHeights = remember {
                 mutableStateMapOf<String, Dp>().apply {
                     (picsList as ApiResponse.Success<List<Photos>>).data.forEach { photo ->
-                        put(photo.id, Random.nextInt(100, 250).dp) // Assign a fixed random height per item
+                        put(
+                            photo.id,
+                            Random.nextInt(100, 250).dp
+                        )
                     }
                 }
             }
@@ -72,7 +75,9 @@ fun HomeScreen() {
                     verticalItemSpacing = 8.dp,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items((picsList as ApiResponse.Success<List<Photos>>).data,key = { it.id }) { pics ->
+                    items(
+                        (picsList as ApiResponse.Success<List<Photos>>).data,
+                        key = { it.id }) { pics ->
                         AsyncImage(
                             model = pics.urls?.regular,
                             contentDescription = "",

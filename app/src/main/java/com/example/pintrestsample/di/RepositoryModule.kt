@@ -1,6 +1,10 @@
 package com.example.pintrestsample.di
 
 import android.content.SharedPreferences
+import com.example.pintrestsample.domain.FilterCollectionImpl
+import com.example.pintrestsample.domain.FilterCollections
+import com.example.pintrestsample.domain.GetCollectionList
+import com.example.pintrestsample.domain.GetCollectionListImpl
 import com.example.pintrestsample.domain.GetPhotoList
 import com.example.pintrestsample.domain.GetPhotosListImpl
 import com.example.pintrestsample.domain.PreferenceAccess
@@ -37,5 +41,16 @@ object RepositoryModule {
         return GetPhotosListImpl(api)
     }
 
+    @Provides
+    @Singleton
+    fun provideGetCollectionRepository(api: PhotosApi): GetCollectionList {
+        return GetCollectionListImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilterCollectionRepository(getCollectionList: GetCollectionList): FilterCollections {
+        return FilterCollectionImpl(getCollectionList)
+    }
 
 }
