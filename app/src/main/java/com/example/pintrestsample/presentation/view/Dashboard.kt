@@ -61,7 +61,7 @@ fun Dashboard(navController: NavHostController) {
 fun NavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = Menu.HOME.name) {
         composable(Menu.HOME.name) { HomeScreen() }
-        composable(Menu.SEARCH.name) {  }
+        composable(Menu.SEARCH.name) { SearchScreen() }
         composable(Menu.PROFILE.name) {  }
     }
 }

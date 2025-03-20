@@ -33,18 +33,18 @@ import kotlin.random.Random
 fun HomeScreen() {
     val viewModel: HomeViewModel = hiltViewModel()
     viewModel.getImgList()
-    val picsList by remember { viewModel.picsBitmap }.collectAsState()
+    val picsListResponse by remember { viewModel.picsBitmap }.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.getImgList()
     }
 
-    when (picsList) {
+    when (picsListResponse) {
         is ApiResponse.Error -> {
             Toast.makeText(
                 context,
-                (picsList as ApiResponse.Error<List<Photos>>).errorMessage,
+                (picsListResponse as ApiResponse.Error<List<Photos>>).errorMessage,
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -52,7 +52,7 @@ fun HomeScreen() {
         is ApiResponse.Failed -> {
             Toast.makeText(
                 context,
-                (picsList as ApiResponse.Failed<List<Photos>>).failedException,
+                (picsListResponse as ApiResponse.Failed<List<Photos>>).failedException,
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -60,7 +60,7 @@ fun HomeScreen() {
         is ApiResponse.Success -> {
             val photoHeights = remember {
                 mutableStateMapOf<String, Dp>().apply {
-                    (picsList as ApiResponse.Success<List<Photos>>).data.forEach { photo ->
+                    (picsListResponse as ApiResponse.Success<List<Photos>>).data.forEach { photo ->
                         put(
                             photo.id,
                             Random.nextInt(100, 250).dp
@@ -76,7 +76,7 @@ fun HomeScreen() {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(
-                        (picsList as ApiResponse.Success<List<Photos>>).data,
+                        (picsListResponse as ApiResponse.Success<List<Photos>>).data,
                         key = { it.id }) { pics ->
                         AsyncImage(
                             model = pics.urls?.regular,

@@ -1,7 +1,8 @@
 package com.example.pintrestsample.domain
 
 import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.services.ApiResponse
 
 interface GetCollectionList {
-    fun getList():List<CollectionPhotos>
+    fun getList(apiResponse: (ApiResponse<List<CollectionPhotos.PreviewPhoto?>>) -> Unit)
 }
