@@ -4,5 +4,5 @@ import com.example.pintrestsample.model.CollectionPhotos
 import com.example.pintrestsample.services.ApiResponse
 
 interface FilterCollections {
-    fun filterSearchInputForCollections():ApiResponse<List<CollectionPhotos.PreviewPhoto?>>
+    fun filterSearchInputForCollections(apiResponse: (ApiResponse<List<CollectionPhotos.PreviewPhoto>>)->Unit)
 }

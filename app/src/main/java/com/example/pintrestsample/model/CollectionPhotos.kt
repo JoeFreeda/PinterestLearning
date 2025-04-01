@@ -127,6 +127,7 @@ data class CollectionPhotos(
     )
 
     data class PreviewPhoto(
+        var name: String?,
         val asset_type: String?,
         val blur_hash: String?,
         val created_at: String?,

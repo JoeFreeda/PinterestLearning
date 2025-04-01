@@ -16,15 +16,18 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val filterCollections: FilterCollections) :
     ViewModel() {
 
-    private var _collectionList: MutableStateFlow<ApiResponse<List<CollectionPhotos.PreviewPhoto?>>> =
+    private var _collectionList: MutableStateFlow<ApiResponse<List<CollectionPhotos.PreviewPhoto>>> =
         MutableStateFlow(
-          ApiResponse.Error("")
+            ApiResponse.Error("")
         )
-    val connectionList: StateFlow<ApiResponse<List<CollectionPhotos.PreviewPhoto?>>> = _collectionList
+    val connectionList: StateFlow<ApiResponse<List<CollectionPhotos.PreviewPhoto>>> =
+        _collectionList
 
     fun getCollectionList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _collectionList.value = filterCollections.filterSearchInputForCollections()
+            filterCollections.filterSearchInputForCollections() {
+                _collectionList.value = it
+            }
         }
     }
 }

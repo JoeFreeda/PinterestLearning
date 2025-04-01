@@ -4,5 +4,5 @@ import com.example.pintrestsample.model.CollectionPhotos
 import com.example.pintrestsample.services.ApiResponse
 
 interface GetCollectionList {
-    fun getList(apiResponse: (ApiResponse<List<CollectionPhotos.PreviewPhoto?>>) -> Unit)
+    fun getList(apiResponse: (ApiResponse<List<CollectionPhotos>>) -> Unit)
 }
