@@ -1,8 +1,7 @@
-package com.example.pintrestsample.presentation.view
+package com.example.pintrestsample.presentation.view.SearchScreens
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Refresh
@@ -36,11 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.pintrestsample.model.CollectionPhotos
@@ -53,8 +56,9 @@ fun SearchScreen() {
     viewModel.getCollectionList()
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
         verticalArrangement = Arrangement.Top
     ) {
         var text by remember { mutableStateOf("") }
@@ -62,29 +66,43 @@ fun SearchScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(50.dp)
                 .align(Alignment.CenterHorizontally)
-                .border(1.dp, Color.Black, RectangleShape)
         ) {
             TextField(
                 modifier = Modifier
-                    .fillMaxWidth(), singleLine = true,
+                    .fillMaxWidth().height(50.dp), singleLine = true,
                 value = text,
                 onValueChange = { if (it.length < 20) text = it },
-                placeholder = { Text("Search") },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.LightGray, // Background when focused
-                    unfocusedContainerColor = Color.White, // Background when not focused
-                    disabledContainerColor = Color.Gray, // Background when disabled
-                    errorContainerColor = Color.Red // Background in case of an error
+                placeholder = {
+                    Text(
+                        "Search",
+                        style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Normal)
+                    )
+                },
+
+                shape = RoundedCornerShape(14.dp),
+                textStyle = TextStyle(
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
                 ),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                ),
+
+
+
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search",
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(18.dp),
                         tint = Color.Gray
                     )
                 },
+
                 trailingIcon = {
                     Row(
                         Modifier.padding(end = 8.dp),
@@ -93,13 +111,13 @@ fun SearchScreen() {
                         Icon(
                             imageVector = Icons.Default.Face,
                             contentDescription = "Face",
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(18.dp),
                             tint = Color.Gray
                         )
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = "Refresh",
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(18.dp),
                             tint = Color.Gray
                         )
                     }
@@ -108,9 +126,14 @@ fun SearchScreen() {
 
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
+        Text(
+            text = "Trending collections",
+            style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Normal, textAlign = TextAlign.Left)
+        )
 
+        Spacer(modifier = Modifier.height(12.dp))
         CreateCollectionList(collectionItems)
     }
 }
@@ -120,7 +143,7 @@ fun toast(context: Context, message: String) {
 }
 
 @Composable
-fun CreateCollectionList(collectionItems: State<ApiResponse<List<CollectionPhotos.PreviewPhoto>>>) {
+fun CreateCollectionList(collectionItems: State<ApiResponse<List<CollectionPhotos>>>) {
     val context = LocalContext.current
     LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         when (collectionItems.value) {
@@ -135,10 +158,10 @@ fun CreateCollectionList(collectionItems: State<ApiResponse<List<CollectionPhoto
             )
 
             is ApiResponse.Success -> {
-                items((collectionItems.value as ApiResponse.Success<List<CollectionPhotos.PreviewPhoto>>).data) { imgItem ->
+                items((collectionItems.value as ApiResponse.Success<List<CollectionPhotos>>).data) { imgItem ->
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         AsyncImage(
-                            model = imgItem.urls?.regular, // Replace with your image URL
+                            model = imgItem.cover_photo?.urls?.thumb, // Replace with your image URL
                             contentDescription = "Sample Image",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
@@ -146,9 +169,16 @@ fun CreateCollectionList(collectionItems: State<ApiResponse<List<CollectionPhoto
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Transparent, CircleShape)
                         )
-                            imgItem.name?.let {
-                                val truncatedText = if (it.length > 10) it.take(7) + "..." else it
-                                Text(text = truncatedText, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                        Spacer(modifier = Modifier.height(4.dp))
+                        imgItem.title?.let {
+                            val truncatedText = if (it.length > 13) it.take(10) + "..." else it
+                            Text(
+                                text = truncatedText,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal)
+                            )
+                        }
                     }
                 }
             }

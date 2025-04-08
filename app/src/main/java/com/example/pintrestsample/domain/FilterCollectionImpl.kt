@@ -5,7 +5,7 @@ import com.example.pintrestsample.services.ApiResponse
 
 class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
     FilterCollections {
-    override fun filterSearchInputForCollections(apiResponse: (ApiResponse<List<CollectionPhotos.PreviewPhoto>>) -> Unit) {
+    override fun filterSearchInputForCollections(apiResponse: (ApiResponse<List<CollectionPhotos>>) -> Unit) {
         getCollectionList.getList { res ->
             when (res) {
                 is ApiResponse.Error -> {
@@ -17,20 +17,15 @@ class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
                 }
 
                 is ApiResponse.Success -> {
-                    val filteredList: MutableList<CollectionPhotos.PreviewPhoto?> = mutableListOf()
-                    res.data.forEach { collectionPhotos ->
-                        collectionPhotos.preview_photos?.let { previewPhotos ->
-                            previewPhotos.forEach {photos->
-                                photos?.name = collectionPhotos.title
-                                filteredList.add(photos)
-                            }
-                        }
-                    }
-                    filteredList.filterNotNull().toList().let {
-                        apiResponse(ApiResponse.Success(it))
-                    }
+                    val filteredList: MutableList<CollectionPhotos> = mutableListOf()
+                            filteredList.addAll(res.data)
+                    apiResponse(ApiResponse.Success(filteredList.toList()))
                 }
             }
         }
+    }
+
+    override fun getPopularList() {
+        TODO("Not yet implemented")
     }
 }
