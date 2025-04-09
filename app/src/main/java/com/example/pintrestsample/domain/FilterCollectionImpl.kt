@@ -1,6 +1,7 @@
 package com.example.pintrestsample.domain
 
 import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.model.CreatorsItem
 import com.example.pintrestsample.services.ApiResponse
 
 class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
@@ -25,7 +26,7 @@ class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
         }
     }
 
-    override fun getPopularList() {
-        TODO("Not yet implemented")
+    override fun getPopularList(apiReResponse: (ApiResponse<List<CreatorsItem>>) -> Unit) {
+
     }
 }

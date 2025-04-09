@@ -28,6 +28,10 @@ class SearchViewModel @Inject constructor(private val filterCollections: FilterC
             filterCollections.filterSearchInputForCollections {
                 _collectionList.value = it
             }
+
+            filterCollections.getPopularList{
+
+            }
         }
     }
 }

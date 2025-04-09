@@ -8,8 +8,11 @@ import retrofit2.http.Query
 
 interface PhotosApi {
     @GET("/photos")
-    fun getAllPhotos(@Query("per_page")page:Int):Call<List<Photos>>
+    fun getAllPhotos(@Query("per_page") page: Int): Call<List<Photos>>
 
     @GET("/collections")
-    fun getCollections():Call<List<CollectionPhotos>>
+    fun getCollections(): Call<List<CollectionPhotos>>
+
+    @GET("/photos/random")
+    fun <T> getPopularPhotos(@Query("count") count: Int): Call<List<T>>
 }

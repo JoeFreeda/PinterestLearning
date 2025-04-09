@@ -1,6 +1,7 @@
 package com.example.pintrestsample.domain
 
 import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.model.CreatorsItem
 import com.example.pintrestsample.services.ApiResponse
 import com.example.pintrestsample.services.PhotosApi
 import retrofit2.Call
@@ -15,8 +16,6 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
                 response: Response<List<CollectionPhotos>>
             ) {
                 if (response.isSuccessful) {
-                    val previewPhoto: MutableList<List<CollectionPhotos.PreviewPhoto>> =
-                        mutableListOf()
                     response.body().let { result ->
                         result?.let {
                             apiResponse(ApiResponse.Success(it))
@@ -32,6 +31,29 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
                 val errorMessage = t.message ?: "Unknown error"
                 apiResponse(ApiResponse.Failed(errorMessage))
             }
+
+        })
+    }
+
+    override fun getCreatorsList(apiResponse: (ApiResponse<List<CreatorsItem>>) -> Unit) {
+        api.getPopularPhotos<CreatorsItem>(10).enqueue(object : Callback<List<CreatorsItem>> {
+            override fun onResponse(
+                call: Call<List<CreatorsItem>>,
+                response: Response<List<CreatorsItem>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        apiResponse(ApiResponse.Success(it))
+                    }
+                } else {
+                    apiResponse(ApiResponse.Error(response.errorBody().toString()))
+                }
+            }
+
+            override fun onFailure(call: Call<List<CreatorsItem>>, t: Throwable) {
+                apiResponse(ApiResponse.Failed(t.message.toString()))
+            }
+
 
         })
     }
