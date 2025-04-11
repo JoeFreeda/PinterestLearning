@@ -1,8 +1,8 @@
-package com.example.pintrestsample.services
+package com.example.pintrestsample.data.services
 
-import com.example.pintrestsample.model.CollectionPhotos
-import com.example.pintrestsample.model.CreatorsItem
-import com.example.pintrestsample.model.Photos
+import com.example.pintrestsample.data.model.CollectionPhotos
+import com.example.pintrestsample.data.model.CreatorsItem
+import com.example.pintrestsample.data.model.Photos
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

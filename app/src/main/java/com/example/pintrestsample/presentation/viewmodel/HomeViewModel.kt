@@ -2,9 +2,9 @@ package com.example.pintrestsample.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pintrestsample.domain.GetPhotoList
-import com.example.pintrestsample.model.Photos
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.GetPhotoList
+import com.example.pintrestsample.data.model.Photos
+import com.example.pintrestsample.data.services.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.flow.MutableStateFlow

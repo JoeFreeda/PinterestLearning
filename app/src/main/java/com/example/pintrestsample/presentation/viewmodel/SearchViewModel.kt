@@ -2,10 +2,10 @@ package com.example.pintrestsample.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pintrestsample.domain.FilterCollections
-import com.example.pintrestsample.model.CollectionPhotos
-import com.example.pintrestsample.model.CreatorsItem
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.FilterCollections
+import com.example.pintrestsample.data.model.CollectionPhotos
+import com.example.pintrestsample.data.model.CreatorsItem
+import com.example.pintrestsample.data.services.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

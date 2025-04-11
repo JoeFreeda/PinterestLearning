@@ -1,8 +1,10 @@
 package com.example.pintrestsample.domain
 
-import com.example.pintrestsample.model.CollectionPhotos
-import com.example.pintrestsample.model.CreatorsItem
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.FilterCollections
+import com.example.pintrestsample.data.GetCollectionList
+import com.example.pintrestsample.data.model.CollectionPhotos
+import com.example.pintrestsample.data.model.CreatorsItem
+import com.example.pintrestsample.data.services.ApiResponse
 
 class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
     FilterCollections {

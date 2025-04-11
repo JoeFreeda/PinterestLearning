@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
-import com.example.pintrestsample.model.CreatorsItem
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.model.CreatorsItem
+import com.example.pintrestsample.data.services.ApiResponse
 
 @Composable
 fun CreatorItemList(creatorsItem: ApiResponse<List<CreatorsItem>>, context: Context) {

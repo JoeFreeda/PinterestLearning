@@ -1,4 +1,4 @@
-package com.example.pintrestsample.model
+package com.example.pintrestsample.data.model
 
 data class CreatorsItem(
     val alt_description: String?,

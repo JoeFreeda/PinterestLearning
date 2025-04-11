@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.pintrestsample.model.Photos
+import com.example.pintrestsample.data.model.Photos
 import com.example.pintrestsample.presentation.viewmodel.HomeViewModel
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.services.ApiResponse
 import kotlin.random.Random
 
 @Composable

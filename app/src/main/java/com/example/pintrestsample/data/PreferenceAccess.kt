@@ -1,4 +1,4 @@
-package com.example.pintrestsample.domain
+package com.example.pintrestsample.data
 
 interface PreferenceAccess {
 

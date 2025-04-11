@@ -1,9 +1,7 @@
-package com.example.pintrestsample.di
+package com.example.pintrestsample.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
-import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.example.pintrestsample.BuildConfig

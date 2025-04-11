@@ -47,9 +47,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.data.model.CollectionPhotos
 import com.example.pintrestsample.presentation.viewmodel.SearchViewModel
-import com.example.pintrestsample.services.ApiResponse
+import com.example.pintrestsample.data.services.ApiResponse
 
 @Composable
 fun SearchScreen() {

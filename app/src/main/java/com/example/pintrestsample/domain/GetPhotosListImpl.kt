@@ -1,8 +1,9 @@
 package com.example.pintrestsample.domain
 
-import com.example.pintrestsample.model.Photos
-import com.example.pintrestsample.services.ApiResponse
-import com.example.pintrestsample.services.PhotosApi
+import com.example.pintrestsample.data.GetPhotoList
+import com.example.pintrestsample.data.model.Photos
+import com.example.pintrestsample.data.services.ApiResponse
+import com.example.pintrestsample.data.services.PhotosApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
