@@ -19,7 +19,7 @@ class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
 
                 is ApiResponse.Success -> {
                     val filteredList: MutableList<CollectionPhotos> = mutableListOf()
-                            filteredList.addAll(res.data)
+                    filteredList.addAll(res.data)
                     apiResponse(ApiResponse.Success(filteredList.toList()))
                 }
             }
@@ -27,6 +27,20 @@ class FilterCollectionImpl(private val getCollectionList: GetCollectionList) :
     }
 
     override fun getPopularList(apiReResponse: (ApiResponse<List<CreatorsItem>>) -> Unit) {
+        getCollectionList.getCreatorsList { res ->
+            when (res) {
+                is ApiResponse.Error -> {
+                    apiReResponse(ApiResponse.Error(res.errorMessage))
+                }
 
+                is ApiResponse.Failed -> {
+                    apiReResponse(ApiResponse.Error(res.failedException))
+                }
+
+                is ApiResponse.Success -> {
+                    apiReResponse(ApiResponse.Success(res.data))
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.pintrestsample.services
 
 import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.model.CreatorsItem
 import com.example.pintrestsample.model.Photos
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,5 +15,5 @@ interface PhotosApi {
     fun getCollections(): Call<List<CollectionPhotos>>
 
     @GET("/photos/random")
-    fun <T> getPopularPhotos(@Query("count") count: Int): Call<List<T>>
+    fun getPopularPhotos(@Query("count") count: Int): Call<List<CreatorsItem>>
 }

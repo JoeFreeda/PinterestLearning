@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,7 +54,10 @@ import com.example.pintrestsample.services.ApiResponse
 @Composable
 fun SearchScreen() {
     val viewModel: SearchViewModel = hiltViewModel()
-    viewModel.getCollectionList()
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.getCollectionList()
+    }
 
     Column(
         modifier = Modifier
@@ -63,6 +67,7 @@ fun SearchScreen() {
     ) {
         var text by remember { mutableStateOf("") }
         val collectionItems = viewModel.connectionList.collectAsState()
+        val creatorsItem = viewModel.popularList.collectAsState()
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -71,7 +76,8 @@ fun SearchScreen() {
         ) {
             TextField(
                 modifier = Modifier
-                    .fillMaxWidth().height(50.dp), singleLine = true,
+                    .fillMaxWidth()
+                    .height(50.dp), singleLine = true,
                 value = text,
                 onValueChange = { if (it.length < 20) text = it },
                 placeholder = {
@@ -91,7 +97,6 @@ fun SearchScreen() {
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                 ),
-
 
 
                 leadingIcon = {
@@ -130,11 +135,17 @@ fun SearchScreen() {
 
         Text(
             text = "Trending collections",
-            style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Normal, textAlign = TextAlign.Left)
+            style = TextStyle(
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Left
+            )
         )
 
         Spacer(modifier = Modifier.height(12.dp))
-        CreateCollectionList(collectionItems)
+        CreateCollectionList(collectionItems, context)
+        Spacer(modifier = Modifier.height(12.dp))
+        CreatorItemList(creatorsItem.value, context)
     }
 }
 
@@ -143,8 +154,11 @@ fun toast(context: Context, message: String) {
 }
 
 @Composable
-fun CreateCollectionList(collectionItems: State<ApiResponse<List<CollectionPhotos>>>) {
-    val context = LocalContext.current
+fun CreateCollectionList(
+    collectionItems: State<ApiResponse<List<CollectionPhotos>>>,
+    context: Context
+) {
+
     LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         when (collectionItems.value) {
             is ApiResponse.Error -> toast(

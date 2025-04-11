@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pintrestsample.domain.FilterCollections
 import com.example.pintrestsample.model.CollectionPhotos
+import com.example.pintrestsample.model.CreatorsItem
 import com.example.pintrestsample.services.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,13 @@ class SearchViewModel @Inject constructor(private val filterCollections: FilterC
     val connectionList: StateFlow<ApiResponse<List<CollectionPhotos>>> =
         _collectionList
 
+    private var _popularList: MutableStateFlow<ApiResponse<List<CreatorsItem>>> =
+        MutableStateFlow(
+            ApiResponse.Error("")
+        )
+    val popularList: StateFlow<ApiResponse<List<CreatorsItem>>> =
+        _popularList
+
     fun getCollectionList() {
         viewModelScope.launch(Dispatchers.IO) {
             filterCollections.filterSearchInputForCollections {
@@ -30,7 +38,7 @@ class SearchViewModel @Inject constructor(private val filterCollections: FilterC
             }
 
             filterCollections.getPopularList{
-
+                _popularList.value = it
             }
         }
     }

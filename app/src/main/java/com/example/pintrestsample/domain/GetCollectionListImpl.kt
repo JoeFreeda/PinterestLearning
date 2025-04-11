@@ -36,7 +36,7 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
     }
 
     override fun getCreatorsList(apiResponse: (ApiResponse<List<CreatorsItem>>) -> Unit) {
-        api.getPopularPhotos<CreatorsItem>(10).enqueue(object : Callback<List<CreatorsItem>> {
+        api.getPopularPhotos(10).enqueue(object : Callback<List<CreatorsItem>> {
             override fun onResponse(
                 call: Call<List<CreatorsItem>>,
                 response: Response<List<CreatorsItem>>
@@ -53,8 +53,6 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
             override fun onFailure(call: Call<List<CreatorsItem>>, t: Throwable) {
                 apiResponse(ApiResponse.Failed(t.message.toString()))
             }
-
-
         })
     }
 }
