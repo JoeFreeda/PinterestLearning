@@ -3,6 +3,7 @@ package com.example.pintrestsample.domain
 import com.example.pintrestsample.data.GetCollectionList
 import com.example.pintrestsample.data.model.CollectionPhotos
 import com.example.pintrestsample.data.model.CreatorsItem
+import com.example.pintrestsample.data.model.PopularItems
 import com.example.pintrestsample.data.services.ApiResponse
 import com.example.pintrestsample.data.services.PhotosApi
 import retrofit2.Call
@@ -37,7 +38,7 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
     }
 
     override fun getCreatorsList(apiResponse: (ApiResponse<List<CreatorsItem>>) -> Unit) {
-        api.getPopularPhotos(10).enqueue(object : Callback<List<CreatorsItem>> {
+        api.getCreatorsPhotos(10).enqueue(object : Callback<List<CreatorsItem>> {
             override fun onResponse(
                 call: Call<List<CreatorsItem>>,
                 response: Response<List<CreatorsItem>>
@@ -52,6 +53,27 @@ class GetCollectionListImpl(private val api: PhotosApi) : GetCollectionList {
             }
 
             override fun onFailure(call: Call<List<CreatorsItem>>, t: Throwable) {
+                apiResponse(ApiResponse.Failed(t.message.toString()))
+            }
+        })
+    }
+
+    override fun getPopularList(apiResponse: (ApiResponse<List<PopularItems>>) -> Unit) {
+        api.getPopularPhotos(296).enqueue(object : Callback<List<PopularItems>> {
+            override fun onResponse(
+                call: Call<List<PopularItems>>,
+                response: Response<List<PopularItems>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        apiResponse(ApiResponse.Success(it))
+                    }
+                } else {
+                    apiResponse(ApiResponse.Error(response.errorBody().toString()))
+                }
+            }
+
+            override fun onFailure(call: Call<List<PopularItems>>, t: Throwable) {
                 apiResponse(ApiResponse.Failed(t.message.toString()))
             }
         })

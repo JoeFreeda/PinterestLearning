@@ -67,7 +67,8 @@ fun SearchScreen() {
     ) {
         var text by remember { mutableStateOf("") }
         val collectionItems = viewModel.connectionList.collectAsState()
-        val creatorsItem = viewModel.popularList.collectAsState()
+        val creatorsItem = viewModel.creatorList.collectAsState()
+        val popularItems = viewModel.popularList.collectAsState()
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -146,6 +147,8 @@ fun SearchScreen() {
         CreateCollectionList(collectionItems, context)
         Spacer(modifier = Modifier.height(12.dp))
         CreatorItemList(creatorsItem.value, context)
+        Spacer(modifier = Modifier.height(12.dp))
+        PopularItemList(popularItems.value, context)
     }
 }
 
